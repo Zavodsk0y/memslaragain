@@ -20,6 +20,6 @@ class ApiRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new ApiException('Нарушение правил валидации', 422, $validator->errors());
+        throw new ApiException(422, 'Нарушение правил валидации', $validator->errors());
     }
 }

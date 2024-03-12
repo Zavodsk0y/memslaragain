@@ -4,10 +4,11 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiException extends HttpResponseException
 {
-    public function __construct(string $message = "Нарушение правил валидации", int $code = 422, $errors = [])
+    public function __construct($code = 422, $message = 'Нарушение правил валидации', $errors = [])
     {
         $data = [
             'success' => false,

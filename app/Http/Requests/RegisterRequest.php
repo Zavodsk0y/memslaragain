@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Password;
 
-class ProductRequest extends ApiRequest
+class RegisterRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,9 @@ class ProductRequest extends ApiRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255',
-            'description' => 'required',
+            'email' => 'required|email|unique:users',
+            'name' => 'max:255',
+            'password' => ['required']
         ];
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AccessController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,16 +20,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/signup', [AuthController::class, 'signup']);
-Route::post('/login', [AuthController::class, 'login']);
-
-Route::resource('/products', ProductController::class)->only(['index', 'show']);
+Route::post('/signup', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout']);
-    Route::resource('/products', ProductController::class)->only(['store', 'update', 'destroy']);
-    Route::resource('/cart', CartController::class)->only('index');
-    Route::post('/cart/{product}', [CartController::class, 'store']);
-    Route::delete('/cart/{cartProduct}', [CartController::class, 'destroy']);
-    Route::resource('/files', FileController::class)->only(['store']);
+    Route::get('/logout', [UserController::class, 'logout']);
+    Route::prefix('files')->group(function () {
+        Route::post('/', [FileController::class, 'store']);
+        Route::get('/disk', [FileController::class, 'index']);
+        Route::get('/shared', [FileController::class, 'shared']);
+        Route::get('/{file}', [FileController::class, 'show']);
+        Route::patch('/{file}', [FileController::class, 'update']);
+        Route::delete('/{file}', [FileController::class, 'destroy']);
+
+        Route::post('/{file}/accesses', [AccessController::class, 'store']);
+        Route::delete('/{file}/accesses', [AccessController::class, 'destroy']);
+    });
 });

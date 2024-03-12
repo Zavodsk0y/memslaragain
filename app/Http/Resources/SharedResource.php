@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FileResource extends JsonResource
+class SharedResource extends JsonResource
 {
     public function toArray($request)
     {
@@ -14,7 +14,8 @@ class FileResource extends JsonResource
             'file_id' => $this->file_id,
             'name' => $this->name,
             'code' => 200,
-            'url' => url("files/$this->file_id")
+            'url' => url("files/$this->file_id"),
+            'accesses' => AccessResource::collection($this->access)
         ];
     }
 }

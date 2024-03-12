@@ -44,13 +44,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function cart(): HasOne
-    {
-        return $this->hasOne(Cart::class);
-    }
 
     public function files(): hasMany
     {
         return $this->hasMany(File::class);
+    }
+
+    public function shared()
+    {
+        return $this->belongsToMany(File::class, 'accesses', 'user_id', 'file_id')
+            ->withPivot('type')->withoutGlobalScopes()->wherePivot('type', 'co-author');
     }
 }

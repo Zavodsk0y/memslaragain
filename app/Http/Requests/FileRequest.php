@@ -24,8 +24,7 @@ class FileRequest extends ApiRequest
     public function rules()
     {
         return [
-            'files' => 'required',
-            'files.*' => 'required|mimes:doc,pdf,docx,zip,jpeg,jpg,png|max:20000'
+            'files' => 'required'
         ];
     }
 }

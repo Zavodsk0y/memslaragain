@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SignupRequest extends ApiRequest
+class AccessRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class SignupRequest extends ApiRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users,email',
-            'name' => 'max:255',
-            'password' => 'required'
+            'email' => 'required',
         ];
     }
 }
