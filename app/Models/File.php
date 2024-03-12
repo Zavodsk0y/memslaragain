@@ -70,7 +70,7 @@ class File extends Model
 
     public function availableFor(User $user)
     {
-        $this->access()->contains('id', $user->id);
+        return $this->access->contains('id', $user->id);
     }
 
 }
